@@ -1,5 +1,5 @@
 const Homepage = () => {
-  return <>Prostor</>;
+  return <span>Prostor</span>;
 };
 
 export default Homepage;
