@@ -1,13 +1,11 @@
 'use server';
+import { prisma } from '@/db/prisma';
 
-import { prisma } from '@/lib/generated/prisma/helper';
-
-import { Product } from '@/types';
 import { convertToPlainObject } from '../utils';
 import { LATEST_PRODUCTS_LIMIT } from '../constants';
 
 // Get latest products
-export async function getLatestProducts(): Promise<Product[]> {
+export async function getLatestProducts() {
   const data = await prisma.product.findMany({
     take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: 'desc' },

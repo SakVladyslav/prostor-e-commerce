@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/generated/prisma/helper';
+import { prisma } from './prisma';
 
 import sampleData from './sample-data';
 
