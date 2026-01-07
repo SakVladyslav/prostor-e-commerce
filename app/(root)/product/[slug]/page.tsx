@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 
 import { getProductBySlug } from '@/lib/actions/product.actions';
+import { getMyCart } from '@/lib/actions/cart.actions';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import ProductPrice from '@/components/shared/product/product-price';
 import ProductImages from '@/components/shared/product/product-images';
 import AddToCart from '@/components/shared/product/add-to-cart';
@@ -15,6 +15,8 @@ const ProductDetailsPage = async (props: {
   const { slug } = await props.params;
 
   const product = await getProductBySlug(slug);
+  const cart = await getMyCart();
+
   if (!product) notFound();
 
   return (
@@ -65,6 +67,7 @@ const ProductDetailsPage = async (props: {
                 {product.stock > 0 && (
                   <div className="flex-center">
                     <AddToCart
+                      cart={cart}
                       item={{
                         productId: product.id,
                         name: product.name,

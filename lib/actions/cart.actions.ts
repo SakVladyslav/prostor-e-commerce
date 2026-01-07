@@ -8,6 +8,7 @@ import { auth } from '@/auth';
 
 import { convertToPlainObject, formatError, round2 } from '../utils';
 import { cartItemSchema, insertCartSchema } from '../validators';
+import { revalidatePath } from 'next/cache';
 
 const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
@@ -84,8 +85,10 @@ export async function addToCart(data: CartItem) {
         },
       });
 
+      revalidatePath(`/product/${product.slug}`);
+
       return {
-        success: false,
+        success: true,
         message: `${product.name} ${
           existingProduct ? 'updated in' : 'added to'
         } cart`,
@@ -99,7 +102,7 @@ export async function addToCart(data: CartItem) {
   }
 }
 
-export async function removeFromTheCart(productId: string) {
+export async function removeFromCart(productId: string) {
   try {
     const sessionCartId = (await cookies()).get('sessionCartId')?.value;
     if (!sessionCartId) throw new Error('Cart session not found');
@@ -134,6 +137,8 @@ export async function removeFromTheCart(productId: string) {
         ...calcPrice(cart.items),
       },
     });
+
+    revalidatePath(`/product/${product.slug}`);
 
     return {
       success: true,
