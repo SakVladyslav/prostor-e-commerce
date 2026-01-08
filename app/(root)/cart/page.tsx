@@ -11,7 +11,6 @@ const CartPage = async () => {
 
   return (
     <>
-      <h1 className="py-4 h2-bold">Shopping Cart</h1>
       <CartTable cart={cart} />
     </>
   );
