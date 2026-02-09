@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { signInDefaultValue } from '@/lib/constants';
+import { signInDefaultValues } from '@/lib/constants';
 import { signInWithCredentials } from '@/lib/actions/user.actions';
 
 import { Input } from '@/components/ui/input';
@@ -45,7 +45,7 @@ const CredentialsSignInForm = () => {
             type="email"
             required
             autoComplete="email"
-            defaultValue={signInDefaultValue.email}
+            defaultValue={signInDefaultValues.email}
           />
         </div>
 
@@ -59,7 +59,7 @@ const CredentialsSignInForm = () => {
             type="password"
             required
             autoComplete="password"
-            defaultValue={signInDefaultValue.email}
+            defaultValue={signInDefaultValues.email}
           />
         </div>
 

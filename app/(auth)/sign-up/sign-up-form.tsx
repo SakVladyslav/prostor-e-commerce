@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { signUpDefaultValue } from '@/lib/constants';
+import { signUpDefaultValues } from '@/lib/constants';
 import { signUpUser } from '@/lib/actions/user.actions';
 
 import { Input } from '@/components/ui/input';
@@ -45,7 +45,7 @@ const SignUpForm = () => {
             type="text"
             required
             autoComplete="name"
-            defaultValue={signUpDefaultValue.email}
+            defaultValue={signUpDefaultValues.email}
           />
         </div>
 
@@ -59,7 +59,7 @@ const SignUpForm = () => {
             type="text"
             required
             autoComplete="email"
-            defaultValue={signUpDefaultValue.email}
+            defaultValue={signUpDefaultValues.email}
           />
         </div>
 
@@ -73,7 +73,7 @@ const SignUpForm = () => {
             type="password"
             required
             autoComplete="password"
-            defaultValue={signUpDefaultValue.email}
+            defaultValue={signUpDefaultValues.email}
           />
         </div>
 
@@ -87,7 +87,7 @@ const SignUpForm = () => {
             type="password"
             required
             autoComplete="confirmPassword"
-            defaultValue={signUpDefaultValue.email}
+            defaultValue={signUpDefaultValues.email}
           />
         </div>
 

@@ -2,12 +2,17 @@
 
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/db/prisma';
 import { hashSync } from 'bcrypt-ts-edge';
 import { formatError } from '../utils';
 
-import { signInFormSchema, signUpFormSchema } from '../validators';
+import {
+  shippingAddressSchema,
+  signInFormSchema,
+  signUpFormSchema,
+} from '../validators';
+import { ShippingAddress } from '@/types';
 
 // Sign in user
 export async function signInWithCredentials(
@@ -72,6 +77,40 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       throw error;
     }
 
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Get user by id
+export async function getUserById(userId: string) {
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+  });
+
+  if (!user) throw new Error('User not found');
+
+  return user;
+}
+
+// Update user shipping address
+export async function updateUserShippingAddress(address: ShippingAddress) {
+  try {
+    const session = await auth();
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+    });
+
+    if (!currentUser) throw new Error('User not found');
+
+    const addressData = shippingAddressSchema.parse(address);
+
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { address: addressData },
+    });
+
+    return { success: true, message: 'Shipping address updated successfully' };
+  } catch (error) {
     return { success: false, message: formatError(error) };
   }
 }
