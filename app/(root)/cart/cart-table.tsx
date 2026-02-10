@@ -1,8 +1,9 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
-import { Cart } from '@/types';
-import { formatCurrency } from '@/lib/utils';
+import QuantityChangingBlock from '@/components/shared/cart/change-quantity-block';
+import ProceedToCheckoutButton from '@/components/shared/cart/proceed-to-checout-button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -11,9 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import QuantityChangingBlock from '@/components/shared/cart/change-quantity-block';
-import { Card, CardContent } from '@/components/ui/card';
-import ProceedToCheckoutButton from '@/components/shared/cart/proceed-to-checout-button';
+import { formatCurrency } from '@/lib/utils';
+import { Cart } from '@/types';
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   return (

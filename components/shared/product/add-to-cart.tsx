@@ -1,12 +1,12 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { toast } from 'sonner';
 import { Plus } from 'lucide-react';
+import { toast } from 'sonner';
 
-import { addToCart } from '@/lib/actions/cart.actions';
 import { Button } from '@/components/ui/button';
+import { addToCart } from '@/lib/actions/cart.actions';
 import { Cart, CartItem } from '@/types';
 
 import QuantityChangingBlock from '../cart/change-quantity-block';

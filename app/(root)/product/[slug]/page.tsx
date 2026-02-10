@@ -1,13 +1,12 @@
 import { notFound } from 'next/navigation';
 
-import { getProductBySlug } from '@/lib/actions/product.actions';
-import { getMyCart } from '@/lib/actions/cart.actions';
-
+import AddToCart from '@/components/shared/product/add-to-cart';
+import ProductImages from '@/components/shared/product/product-images';
+import ProductPrice from '@/components/shared/product/product-price';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import ProductPrice from '@/components/shared/product/product-price';
-import ProductImages from '@/components/shared/product/product-images';
-import AddToCart from '@/components/shared/product/add-to-cart';
+import { getMyCart } from '@/lib/actions/cart.actions';
+import { getProductBySlug } from '@/lib/actions/product.actions';
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;

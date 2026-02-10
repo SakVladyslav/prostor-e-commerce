@@ -1,17 +1,17 @@
 import Link from 'next/link';
 
-import { auth } from '@/auth';
-import { signOutUser } from '@/lib/actions/user.actions';
-
 import { User } from 'lucide-react';
+
+import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-  DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+import { signOutUser } from '@/lib/actions/user.actions';
 
 const UserButton = async () => {
   const session = await auth();

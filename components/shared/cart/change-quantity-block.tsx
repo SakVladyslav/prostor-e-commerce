@@ -3,12 +3,12 @@
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { toast } from 'sonner';
 import { Loader, Minus, Plus } from 'lucide-react';
-import { CartItem } from '@/types';
-import { addToCart, removeFromCart } from '@/lib/actions/cart.actions';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
+import { addToCart, removeFromCart } from '@/lib/actions/cart.actions';
+import { CartItem } from '@/types';
 
 const QuantityChangingBlock = ({ item }: { item: CartItem }) => {
   const router = useRouter();

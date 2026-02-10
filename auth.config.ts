@@ -1,5 +1,5 @@
-import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
+import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
   providers: [], // Required by NextAuthConfig type

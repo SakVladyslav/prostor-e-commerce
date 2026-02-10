@@ -3,9 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { APP_NAME } from '@/lib/constants';
 import { auth } from '@/auth';
-
 import {
   Card,
   CardContent,
@@ -13,6 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { APP_NAME } from '@/lib/constants';
+
 import SignUpForm from './sign-up-form';
 
 export const metadata: Metadata = {

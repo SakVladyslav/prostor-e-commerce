@@ -1,19 +1,15 @@
 'use client';
 
-import { ControllerRenderProps, useForm, SubmitHandler } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
+import { ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight, Loader } from 'lucide-react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 
-import { updateUserShippingAddress } from '@/lib/actions/user.actions';
-
-import { shippingAddressSchema } from '@/lib/validators';
-import { shippingAddressDefaultValues } from '@/lib/constants';
-import { ShippingAddress } from '@/types';
-
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -23,8 +19,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Loader } from 'lucide-react';
+import { updateUserShippingAddress } from '@/lib/actions/user.actions';
+import { shippingAddressDefaultValues } from '@/lib/constants';
+import { shippingAddressSchema } from '@/lib/validators';
+import { ShippingAddress } from '@/types';
 
 const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
   const router = useRouter();
@@ -187,7 +185,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
                 ) : (
                   <ArrowRight className="w-4 h-4" />
                 )}
-                Save Address
+                Continue
               </Button>
             </div>
           </form>

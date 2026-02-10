@@ -1,19 +1,19 @@
 'use client';
 
+import { useEffect, useEffectEvent, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 import { Moon, SunIcon, SunMoon } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { useEffect, useEffectEvent, useState } from 'react';
 
 const ModeToggle = () => {
   const { theme, setTheme } = useTheme();

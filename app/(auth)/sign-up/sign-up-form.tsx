@@ -5,12 +5,11 @@ import { useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { signUpDefaultValues } from '@/lib/constants';
-import { signUpUser } from '@/lib/actions/user.actions';
-
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { signUpUser } from '@/lib/actions/user.actions';
+import { signUpDefaultValues } from '@/lib/constants';
 
 const SignUpButton = () => {
   const { pending } = useFormStatus();

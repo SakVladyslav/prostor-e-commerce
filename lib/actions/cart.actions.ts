@@ -1,14 +1,14 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { CartItem } from '@/types';
-import { prisma } from '@/db/prisma';
 import { auth } from '@/auth';
+import { prisma } from '@/db/prisma';
+import { CartItem } from '@/types';
 
 import { convertToPlainObject, formatError, round2 } from '../utils';
 import { cartItemSchema, insertCartSchema } from '../validators';
-import { revalidatePath } from 'next/cache';
 
 const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
