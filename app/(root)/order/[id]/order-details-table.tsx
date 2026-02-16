@@ -1,14 +1,54 @@
+'use client';
+
 import Image from 'next/image';
 import Link from "next/link";
+
+import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js'
+import { toast } from 'sonner';
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { approvePaypalOrder, createPaypalOrder } from '@/lib/actions/order.actions';
 import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
 import { Order } from "@/types";
 
-const OrderDetailsTable = ({ order }: { order: Order }) => {
+const PrintLoadingState = () => {
+  const [{ isPending, isRejected }] = usePayPalScriptReducer();
+  let status = '';
+
+  if (isPending) {
+    status = 'Loading PayPal...';
+  } else if (isRejected) {
+    status = 'Error Loading PayPal'
+  }
+
+  return status;
+}
+
+const OrderDetailsTable = ({ order, paypalClientId }: { order: Order; paypalClientId: string }) => {
   const { id, shippingAddress, orderitems, itemsPrice, shippingPrice, taxPrice, totalPrice, paymentMethod, isPaid, deliveredAt, isDelivered, paidAt } = order;
+
+  const handleCreatePayPalOrder = async () => {
+    const res = await createPaypalOrder(id);
+
+    if (!res.success) {
+      toast.error(`Create error: ${res.message}`);
+    }
+
+    return res.data;
+  }
+
+  const handleApprovePayPalOrder = async (data: { orderID: string }) => {
+    const res = await approvePaypalOrder(order.id, data);
+
+    if (!res.success) {
+      toast.error(`Approve Error: ${res.message}`);
+      return;
+    }
+
+    toast(res.message);
+  }
 
   return (
     <>
@@ -96,6 +136,16 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
               <div>Total</div>
               <div>{formatCurrency(totalPrice)}</div>
             </div>
+
+            {/* PayPal payment */}
+            {!isPaid && paymentMethod === 'PayPal' && (
+              <div>
+                <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+                  <PrintLoadingState />
+                  <PayPalButtons createOrder={handleCreatePayPalOrder} onApprove={handleApprovePayPalOrder} />
+                </PayPalScriptProvider>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

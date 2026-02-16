@@ -17,7 +17,7 @@ const OrderDetailsPage = async ({ params }: { params: Promise<{ id: string }> })
 	if (!order) notFound();
 
 	return (
-		<OrderDetailsTable order={{
+		<OrderDetailsTable paypalClientId={process.env.PAYPAL_CLIENT_ID || 'sb'} order={{
 			...order,
 			shippingAddress: order.shippingAddress as ShippingAddress
 		}} />

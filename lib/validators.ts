@@ -7,7 +7,7 @@ const currency = z
   .string()
   .refine(
     (val) => /^\d+(\.\d{2})?/.test(formatNumberWithDecimal(Number(val))),
-    'Price must be a valid number with up to two decimal places'
+    'Price must be a valid number with up to two decimal places',
   );
 
 // Schema for inserting products
@@ -76,14 +76,15 @@ export const shippingAddressSchema = z.object({
   lng: z.number().optional(),
 });
 
-
 // Schema for payment method
-export const paymentMethodSchema = z.object({
-  type: z.string().min(1, 'Payment method is required')
-}).refine((data) => PAYMENT_METHODS.includes(data.type), {
-  path: ['type'],
-  message: 'Invalid payment method'
-});
+export const paymentMethodSchema = z
+  .object({
+    type: z.string().min(1, 'Payment method is required'),
+  })
+  .refine((data) => PAYMENT_METHODS.includes(data.type), {
+    path: ['type'],
+    message: 'Invalid payment method',
+  });
 
 // Schema for inserting order
 export const insertOrderSchema = z.object({
@@ -106,4 +107,11 @@ export const insertOrderItemSchema = z.object({
   name: z.string(),
   price: currency,
   qty: z.number(),
+});
+
+export const paymentResultSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  email_address: z.string(),
+  pricePaid: z.string(),
 });

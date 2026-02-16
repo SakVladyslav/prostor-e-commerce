@@ -27,7 +27,7 @@ export const paypal = {
     return handleResponse(response);
   },
   capturePayment: async function capturePayment(orderId: string) {
-    const access_token = generatePaypalAccessToken();
+    const access_token = await generatePaypalAccessToken();
     const url = `${base}/v2/checkout/orders/${orderId}/capture`;
 
     const response = await fetch(url, {
