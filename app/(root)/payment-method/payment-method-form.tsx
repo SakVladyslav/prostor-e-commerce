@@ -16,7 +16,7 @@ import { updateUserPaymentMethod } from "@/lib/actions/user.actions";
 import { DEFAULT_PAYMENT_METHOD, PAYMENT_METHODS } from "@/lib/constants";
 import { paymentMethodSchema } from "@/lib/validators";
 
-const PaymentMethodForm = ({ preferredPaymentMethod }:  { preferredPaymentMethod: string | null }) => {
+const PaymentMethodForm = ({ preferredPaymentMethod }: { preferredPaymentMethod: string | null }) => {
 	const router = useRouter();
 
 	const form = useForm<z.infer<typeof paymentMethodSchema>>({
@@ -28,39 +28,39 @@ const PaymentMethodForm = ({ preferredPaymentMethod }:  { preferredPaymentMethod
 
 	const [isPending, startTransition] = useTransition();
 
-	const onSubmit = async(values: z.infer<typeof paymentMethodSchema>) => {
+	const onSubmit = async (values: z.infer<typeof paymentMethodSchema>) => {
 		startTransition(async () => {
 			const result = await updateUserPaymentMethod(values);
 
 			if (!result.success) {
-        toast.error(result.message);
-        return;
-      }
+				toast.error(result.message);
+				return;
+			}
 
-      router.push('/place-order');
+			router.push('/place-order');
 		})
 		return;
 	}
 
 	return (
 		<>
-      <div className="max-w-md mx-auto space-y-4">
-        <h1 className="h2-bold mt-4">Payment Method</h1>
-        <p className="text-sm text-muted-foreground">
-          Please select a payment method
-        </p>
+			<div className="max-w-md mx-auto space-y-4">
+				<h1 className="h2-bold mt-4">Payment Method</h1>
+				<p className="text-sm text-muted-foreground">
+					Please select a payment method
+				</p>
 
-        <Form {...form}>
-          <form
-            method="post"
-            className="space-y-4"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <div className="flex- flex-col md:flex-row gap-5">
-              <FormField 
+				<Form {...form}>
+					<form
+						method="post"
+						className="space-y-4"
+						onSubmit={form.handleSubmit(onSubmit)}
+					>
+						<div className="flex- flex-col md:flex-row gap-5">
+							<FormField
 								control={form.control}
 								name="type"
-								render={({field}) => (
+								render={({ field }) => (
 									<FormItem className="space-y-3">
 										<FormControl>
 											<RadioGroup onValueChange={field.onChange} className="flex flex-col space-y-2">
@@ -78,22 +78,22 @@ const PaymentMethodForm = ({ preferredPaymentMethod }:  { preferredPaymentMethod
 									</FormItem>
 								)}
 							/>
-            </div>
+						</div>
 
-            <div className="flex gap-2">
-              <Button type="submit" disabled={isPending} className="w-full">
-                {isPending ? (
-                  <Loader className="w-4 h-4 animate-spin" />
-                ) : (
-                  <ArrowRight className="w-4 h-4" />
-                )}
-                Continue
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </div>
-    </>
+						<div className="flex gap-2">
+							<Button type="submit" disabled={isPending} className="w-full">
+								{isPending ? (
+									<Loader className="w-4 h-4 animate-spin" />
+								) : (
+									<ArrowRight className="w-4 h-4" />
+								)}
+								Continue
+							</Button>
+						</div>
+					</form>
+				</Form>
+			</div>
+		</>
 	);
 };
 

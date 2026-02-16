@@ -4,7 +4,7 @@ import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 import { auth } from '@/auth';
 import { prisma } from '@/db/prisma';
-import { CartItem } from '@/types';
+import { CartItem, Order } from '@/types';
 
 import { convertToPlainObject, formatError } from '../utils';
 import { insertOrderSchema } from '../validators';
@@ -114,5 +114,5 @@ export async function getOrderById(orderId: string) {
     },
   });
 
-  return convertToPlainObject(data);
+  return convertToPlainObject(data as Order | null);
 }
