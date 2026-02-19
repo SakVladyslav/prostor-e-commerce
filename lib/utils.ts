@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
+import qs from 'query-string';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -24,7 +25,7 @@ export function formatError(error: any) {
   if (error.name === 'ZodError') {
     // Handle Zod error
     const fieldErrors = Object.keys(error.errors).map(
-      (field) => error.errors[field].message,
+      (field) => error.errors[field].message
     );
 
     return fieldErrors.join('. ');
@@ -95,15 +96,15 @@ export const formatDateTime = (dateString: Date) => {
   };
   const formattedDateTime: string = new Date(dateString).toLocaleString(
     'en-US',
-    dateTimeOptions,
+    dateTimeOptions
   );
   const formattedDate: string = new Date(dateString).toLocaleString(
     'en-US',
-    dateOptions,
+    dateOptions
   );
   const formattedTime: string = new Date(dateString).toLocaleString(
     'en-US',
-    timeOptions,
+    timeOptions
   );
   return {
     dateTime: formattedDateTime,
@@ -111,3 +112,23 @@ export const formatDateTime = (dateString: Date) => {
     timeOnly: formattedTime,
   };
 };
+
+export function formUrlQuery({
+  params,
+  key,
+  value,
+}: {
+  params: string;
+  key: string;
+  value: string | null;
+}) {
+  const query = qs.parse(params);
+  query[key] = value;
+
+  return qs.stringifyUrl(
+    { url: window.location.pathname, query },
+    {
+      skipNull: true,
+    }
+  );
+}

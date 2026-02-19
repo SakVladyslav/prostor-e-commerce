@@ -2,5 +2,7 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "singleQuote": true,
-  "plugins": ["prettier-plugin-organize-imports"]
+  "importOrder": ["^next/(.*)$", "^@/components$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

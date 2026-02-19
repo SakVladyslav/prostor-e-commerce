@@ -7,7 +7,7 @@ const currency = z
   .string()
   .refine(
     (val) => /^\d+(\.\d{2})?/.test(formatNumberWithDecimal(Number(val))),
-    'Price must be a valid number with up to two decimal places',
+    'Price must be a valid number with up to two decimal places'
   );
 
 // Schema for inserting products
@@ -114,4 +114,9 @@ export const paymentResultSchema = z.object({
   status: z.string(),
   email_address: z.string(),
   pricePaid: z.string(),
+});
+
+export const updateUserProfileSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  email: z.email('Invalid email address'),
 });
