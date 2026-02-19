@@ -1,5 +1,10 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
+import { updateUserProfile } from '@/lib/actions/user.actions';
+import { updateUserProfileSchema } from '@/lib/validators';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -10,11 +15,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { updateUserProfile } from '@/lib/actions/user.actions';
-import { updateUserProfileSchema } from '@/lib/validators';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';

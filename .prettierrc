@@ -2,7 +2,16 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "singleQuote": true,
-  "importOrder": ["^next/(.*)$", "^@/components$", "^@ui/(.*)$", "^[./]"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react(/.*)?$",
+    "^next(-auth)?(/.*)?$",
+    "^@/lib/(.*)$",
+    "^@/components/(.*)$",
+    "^@/(.*)$",
+    "^[./]",
+    "^[^./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
