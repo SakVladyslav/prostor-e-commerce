@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
-import { User } from 'lucide-react';
+import { signOutUser } from '@/lib/actions/user.actions';
 
-import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,7 +10,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { signOutUser } from '@/lib/actions/user.actions';
+
+import { auth } from '@/auth';
+
+import { User } from 'lucide-react';
 
 const UserButton = async () => {
   const session = await auth();
@@ -62,6 +64,15 @@ const UserButton = async () => {
               Order History
             </Link>
           </DropdownMenuItem>
+
+          {session?.user?.role === 'admin' && (
+            <DropdownMenuItem>
+              <Link href="/admin/overview" className="w-full">
+                Admin Overview
+              </Link>
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuItem className="p-0 mb-1">
             <form action={signOutUser}>
               <Button
