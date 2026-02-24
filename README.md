@@ -29,6 +29,13 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Project TODO`s
+
+1. Introduce proper state management and separate data access layer (move Prisma calls to repository layer).
+2. Refactor data flow: extract Prisma calls into a repository layer and introduce proper state management for client and server state. (Zustand, TanStack Query)
+3. Implement data layer architecture (Repository + Service) and introduce structured state management for server and UI state.
+4. Create node js backend for project.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

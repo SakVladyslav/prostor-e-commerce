@@ -1,14 +1,13 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
-
-import { hashSync } from 'bcrypt-ts-edge';
-import z from 'zod';
 
 import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/db/prisma';
 import { ShippingAddress } from '@/types';
 
+import { PAGE_SIZE } from '../constants';
 import { formatError } from '../utils';
 import {
   paymentMethodSchema,
@@ -16,7 +15,11 @@ import {
   signInFormSchema,
   signUpFormSchema,
   updateUserProfileSchema,
+  updateUserSchema,
 } from '../validators';
+
+import { hashSync } from 'bcrypt-ts-edge';
+import z from 'zod';
 
 // Sign in user
 export async function signInWithCredentials(
@@ -165,3 +168,61 @@ export const updateUserProfile = async (
     return { success: false, message: formatError(error) };
   }
 };
+
+// Get all users (admin only)
+export async function getAllUsers({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.user.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+    skip: (page - 1) * limit,
+  });
+
+  const dataCount = await prisma.user.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
+}
+
+// Delete user (admin only)
+export async function deleteUser(userId: string) {
+  try {
+    await prisma.user.delete({
+      where: { id: userId },
+    });
+
+    revalidatePath('/admin/users');
+
+    return { success: true, message: 'User deleted successfully' };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Update user (admin only)
+export async function updateUser(user: z.infer<typeof updateUserSchema>) {
+  try {
+    const { id, name, role } = user;
+
+    await prisma.user.update({
+      where: { id },
+      data: {
+        name,
+        role,
+      },
+    });
+
+    revalidatePath('/admin/users');
+
+    return { success: true, message: 'User updated successfully' };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
