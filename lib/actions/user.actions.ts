@@ -8,6 +8,7 @@ import { prisma } from '@/db/prisma';
 import { ShippingAddress } from '@/types';
 
 import { PAGE_SIZE } from '../constants';
+import { Prisma } from '../generated/prisma/browser';
 import { formatError } from '../utils';
 import {
   paymentMethodSchema,
@@ -173,11 +174,26 @@ export const updateUserProfile = async (
 export async function getAllUsers({
   limit = PAGE_SIZE,
   page,
+  query,
 }: {
   limit?: number;
   page: number;
+  query: string;
 }) {
+  const queryFilter: Prisma.UserWhereInput =
+    query && query !== 'all'
+      ? {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          } as Prisma.StringFilter,
+        }
+      : {};
+
   const data = await prisma.user.findMany({
+    where: {
+      ...queryFilter,
+    },
     orderBy: { createdAt: 'desc' },
     take: limit,
     skip: (page - 1) * limit,
