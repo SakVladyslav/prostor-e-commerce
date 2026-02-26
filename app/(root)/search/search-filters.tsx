@@ -4,17 +4,14 @@ import { getAllProductCategories } from '@/lib/actions/product.actions';
 import { prices, ratings } from '@/lib/constants/search-filters';
 
 type SearchFiltersProps = {
-  q?: string;
   category?: string;
   price?: string;
   rating?: string;
-  sort?: string;
-  page?: string;
   cbFilter: (c: any) => string;
 };
 
 const SearchFilters = async (props: SearchFiltersProps) => {
-  let { category, page, price, q, rating, sort, cbFilter } = props;
+  let { category, price, rating, cbFilter } = props;
 
   const categories = await getAllProductCategories();
 

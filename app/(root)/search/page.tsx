@@ -8,16 +8,50 @@ import { Button } from '@/components/ui/button';
 
 import SearchFilters from './search-filters';
 
-const SearchPage = async (props: {
+type Props = {
   searchParams: Promise<{
-    q?: string;
-    category?: string;
-    price?: string;
-    rating?: string;
+    q: string;
+    category: string;
+    price: string;
+    rating: string;
     sort?: string;
     page?: string;
   }>;
-}) => {
+};
+
+export async function generateMetada(
+  props: Omit<Props['searchParams'], 'sort' | 'page'>
+) {
+  const {
+    q = 'all',
+    category = 'all',
+    price = 'all',
+    rating = 'all',
+  } = await props;
+
+  const isQuerySet = q && q !== 'all' && q.trim() !== '';
+  const isCategorySet =
+    category && category !== 'all' && category.trim() !== '';
+  const isPriceSet = price && price !== 'all' && price.trim() !== '';
+  const isRatingSet = rating && rating !== 'all' && rating.trim() !== '';
+
+  if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
+    return {
+      title: `
+        Search ${isQuerySet ? q : ''} 
+        ${isCategorySet ? `: Category ${category}` : ''}
+        ${isPriceSet ? `: Price ${price}` : ''}
+        ${isRatingSet ? `: Rating ${rating}` : ''}
+      `,
+    };
+  }
+
+  return {
+    title: 'Search Products',
+  };
+}
+
+const SearchPage = async (props: Props) => {
   const {
     q = 'all',
     category = 'all',
@@ -63,7 +97,12 @@ const SearchPage = async (props: {
 
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
-      <SearchFilters {...params} cbFilter={getFilterUrl} />
+      <SearchFilters
+        category={params.category}
+        price={params.price}
+        rating={params.rating}
+        cbFilter={getFilterUrl}
+      />
 
       <div className="md:col-span-4 space-y-4">
         <div className="flex-between flex-col my-4 md:flex-row">
