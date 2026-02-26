@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { getAllProducts } from '@/lib/actions/product.actions';
+import { sortOrders } from '@/lib/constants/search-filters';
 
 import ProductCard from '@/components/shared/product/product-card';
 import { Button } from '@/components/ui/button';
@@ -80,6 +81,18 @@ const SearchPage = async (props: {
                 <Link href="/search">Clear</Link>
               </Button>
             ) : null}
+          </div>
+          <div>
+            Sort by{' '}
+            {sortOrders.map((s) => (
+              <Link
+                key={s}
+                className={`mx-2 ${sort === s && 'font-bold'}`}
+                href={getFilterUrl({ s })}
+              >
+                {s}
+              </Link>
+            ))}
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

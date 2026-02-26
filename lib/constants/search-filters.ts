@@ -22,3 +22,5 @@ export const prices = [
 ];
 
 export const ratings = [4, 3, 2, 1];
+
+export const sortOrders = ['newest', 'lowest', 'highest', 'rating'];
