@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 
-import { createUpdateReview } from '@/lib/actions/review.actions';
+import {
+  createUpdateReview,
+  getReviewByUserId,
+} from '@/lib/actions/review.actions';
 import { reviewFormDefaultValues } from '@/lib/constants';
 import { insertReviewSchema } from '@/lib/validators';
 
@@ -54,9 +57,17 @@ const ReviewForm = ({
     defaultValues: reviewFormDefaultValues,
   });
 
-  const handleOpenForm = () => {
+  const handleOpenForm = async () => {
     form.setValue('productId', productId);
     form.setValue('userId', userId);
+
+    const review = await getReviewByUserId({ productId });
+
+    if (review) {
+      form.setValue('title', review.title);
+      form.setValue('description', review.description);
+      form.setValue('rating', review.rating);
+    }
 
     setOpen(true);
   };
