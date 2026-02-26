@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from 'next';
 import Link from 'next/link';
 
 import { getAllProducts } from '@/lib/actions/product.actions';
@@ -14,20 +15,18 @@ type Props = {
     category: string;
     price: string;
     rating: string;
-    sort?: string;
-    page?: string;
   }>;
 };
 
-export async function generateMetada(
-  props: Omit<Props['searchParams'], 'sort' | 'page'>
-) {
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
   const {
     q = 'all',
     category = 'all',
     price = 'all',
     rating = 'all',
-  } = await props;
+  } = await searchParams;
 
   const isQuerySet = q && q !== 'all' && q.trim() !== '';
   const isCategorySet =
@@ -51,7 +50,16 @@ export async function generateMetada(
   };
 }
 
-const SearchPage = async (props: Props) => {
+const SearchPage = async (props: {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    price?: string;
+    rating?: string;
+    sort?: string;
+    page?: string;
+  }>;
+}) => {
   const {
     q = 'all',
     category = 'all',
