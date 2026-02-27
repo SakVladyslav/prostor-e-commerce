@@ -17,6 +17,7 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
+import { randomUUID } from 'node:crypto';
 
 require('dotenv').config();
 
@@ -24,7 +25,7 @@ export const runtime = 'nodejs';
 
 PurchaseReceiptEmail.PreviewProps = {
   order: {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     userId: '123',
     user: {
       name: 'John Doe',

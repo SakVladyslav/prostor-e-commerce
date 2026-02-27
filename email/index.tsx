@@ -15,6 +15,6 @@ export const sendPurchaseReceipt = async ({ order }: { order: Order }) => {
     from: `${APP_NAME} <${SENDER_EMAIL}>`,
     to: order.user.email,
     subject: `Order Confirmation ${order.id}`,
-    react: <PurchaseReceiptEmail order={JSON.parse(JSON.stringify(order))} />,
+    react: '<p>Hello</p>',
   });
 };
