@@ -35,6 +35,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 2. Refactor data flow: extract Prisma calls into a repository layer and introduce proper state management for client and server state. (Zustand, TanStack Query)
 3. Implement data layer architecture (Repository + Service) and introduce structured state management for server and UI state.
 4. Create node js backend for project.
+5. Add metadata throughout the project.
 
 ## Deploy on Vercel
 

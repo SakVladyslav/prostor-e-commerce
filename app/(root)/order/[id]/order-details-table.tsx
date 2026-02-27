@@ -24,6 +24,7 @@ import { Order } from '@/types';
 
 import MarkAsDeliveredButton from './mark-as-delivered-button';
 import MarkAsPaidButton from './mark-as-paid-button';
+import StripePayment from './stripe-payment';
 
 import {
   PayPalButtons,
@@ -49,10 +50,12 @@ const OrderDetailsTable = ({
   order,
   paypalClientId,
   isAdmin,
+  stripeClientSecret,
 }: {
   order: Order;
   paypalClientId: string;
   isAdmin: boolean;
+  stripeClientSecret: string | null;
 }) => {
   const {
     id,
@@ -204,6 +207,15 @@ const OrderDetailsTable = ({
                   />
                 </PayPalScriptProvider>
               </div>
+            )}
+
+            {/*Stripe payment*/}
+            {!isPaid && paymentMethod === 'Stripe' && stripeClientSecret && (
+              <StripePayment
+                clientSecret={stripeClientSecret}
+                orderId={order.id}
+                priceInCents={Number(order.totalPrice) * 100}
+              />
             )}
 
             {/* Cash on delivery payment */}
