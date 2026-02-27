@@ -18,6 +18,7 @@ import {
   updateUserProfileSchema,
   updateUserSchema,
 } from '../validators';
+import { getMyCart } from './cart.actions';
 
 import { hashSync } from 'bcrypt-ts-edge';
 import z from 'zod';
@@ -47,6 +48,9 @@ export async function signInWithCredentials(
 
 // Sign out user
 export async function signOutUser() {
+  // get current users cart and delete it so it does not persist to next user
+  const currentCart = await getMyCart();
+  await prisma.cart.delete({ where: { id: currentCart?.id } });
   await signOut();
 }
 
