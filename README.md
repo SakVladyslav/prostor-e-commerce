@@ -36,6 +36,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 3. Implement data layer architecture (Repository + Service) and introduce structured state management for server and UI state.
 4. Create node js backend for project.
 5. Add metadata throughout the project.
+6. Fix RESEND for email
+7. Add ukrainian payment methods.
+8. Check Stripe functionality on prod.
 
 ## Deploy on Vercel
 
